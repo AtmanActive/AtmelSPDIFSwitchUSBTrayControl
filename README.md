@@ -3,7 +3,7 @@
 Windows system tray utility to control an Atmel based S/PDIF Switch created by Beni_Skate on Tindie:
 https://www.tindie.com/products/beni_skate/automatic-spdif-opticalrca-audio-switch/
 
-This S/PDIF has intelligent automatic switching by sensing inputs and their activity. But that is for the stuffed-behind-the-TV use case.
+This S/PDIF switch has intelligent automatic switching by sensing inputs and their activity. But that is for the stuffed-behind-the-TV use case.
 As I am not using it like that, but for my digital studio, where several computers and their digital outputs are connected to several digital devices (speakers, headphones...), I needed a utility to explicitly control the inputs on demand. So I built one.
 
 This utility does not poll the device in any way. It is not aware of what is going on inside the device. It just sends serial COM commands blindly and that's it. Still, for choosing the desired input on demand - good enough. No drivers are required. It is enough to connect the device via USB cable and that's it.
