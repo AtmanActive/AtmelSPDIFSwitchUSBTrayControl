@@ -399,6 +399,7 @@ EndFunc ;==> CPU_Loop()
 
 
 Func Set_Channel_Number( $number )
+	Faster_Switching()
 	print( "Setting switch output to channel number " & $number & ": " & $channel_name[$number] )
 	_CommSendString( "$I" & $number & @CRLF, 0 )
 	If $channel_icon_present[$number] = 1 Then
@@ -415,6 +416,14 @@ Func Set_Detection_Timeout( $number )
 	print( "Setting detection timeout to " & $number & " seconds" )
 	_CommSendString( "$CT" & $number & @CRLF, 0 )
 EndFunc ;==> Set_Detection_Timeout( $number )
+
+
+
+Func Faster_Switching()
+	_CommSendString( "$CT1" & @CRLF, 0 )
+	_CommSendString( "$CI0" & @CRLF, 0 )
+	_CommSendString( "$CZ0" & @CRLF, 0 )
+EndFunc ;==> Faster_Switching()
 
 
 
