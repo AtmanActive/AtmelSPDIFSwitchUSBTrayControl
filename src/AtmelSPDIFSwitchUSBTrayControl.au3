@@ -84,6 +84,9 @@ OpenCOM()
 ReadINIChannels()
 CreateGUITray()
 SetAutorun()
+Set_Detection_Timeout(1)
+Set_Option( "Disabled invalid packets detection", "$CI0" )
+Set_Option( "Disabled zero packets detection", "$CZ0" )
 CPU_Loop()
 
 
@@ -404,6 +407,14 @@ Func Set_Channel_Number( $number )
 		TraySetIcon( $my_exe_dir & "\" & "AtmelSPDIFSwitchUSBTrayControl.icl", ( 1 + $number ) )
 	EndIf
 EndFunc ;==> Set_Channel_Number( $number )
+
+
+
+
+Func Set_Detection_Timeout( $number )
+	print( "Setting detection timeout to " & $number & " seconds" )
+	_CommSendString( "$CT" & $number & @CRLF, 0 )
+EndFunc ;==> Set_Detection_Timeout( $number )
 
 
 
