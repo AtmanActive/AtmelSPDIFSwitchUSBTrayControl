@@ -77,17 +77,23 @@ Global $my_ini_path = $my_exe_dir & "\AtmelSPDIFSwitchUSBTrayControl.ini"
 EnvSet( "HOME",   $my_exe_dir )
 EnvSet( "PATH",   $my_exe_dir )
 
+
+
 ReadINICOM()
 CreateGUIWindow()
-print( $PROGNAME & " booting up..." )
-OpenCOM()
+print( $PROGNAME & " v1.2 " & "booting up..." )
+OpenCOM(1)
 ReadINIChannels()
 CreateGUITray()
 SetAutorun()
 Set_Detection_Timeout(1)
 Set_Option( "Disabled invalid packets detection", "$CI0" )
 Set_Option( "Disabled zero packets detection", "$CZ0" )
+_CommClosePort()
 CPU_Loop()
+
+
+
 
 
 
@@ -151,7 +157,7 @@ EndFunc   ;==> ReadINIChannels
 
 
 
-Func OpenCOM()
+Func OpenCOM( $silent_or_verbose )
 	
 	Local $PortsArray = _CommListPorts( 0 )
 	
@@ -161,10 +167,14 @@ Func OpenCOM()
 	EndIf
 	
 	Local $portmatch = 0
-		
-	print( "Found the following COM ports:" )
+	
+	if $silent_or_verbose = 1 Then
+		print( "Found the following COM ports:" )
+	EndIf
 	For $i = 1 To $PortsArray[0]
-		print( $PortsArray[$i] )
+		if $silent_or_verbose = 1 Then
+			print( $PortsArray[$i] )
+		EndIf
 		if $com_port_name = $PortsArray[$i] Then
 			$portmatch = 1
 		EndIf
@@ -179,7 +189,9 @@ Func OpenCOM()
 	Local $sErr
 	Local $portOpenOK = _CommSetport( $com_port_number, $sErr, 9600, 8, 0, 1, 0, 0, 0 )
 	if $portOpenOK = 1 Then
-		print( "COM port " & $com_port_name & " opened successfully." )
+		if $silent_or_verbose = 1 Then
+			print( "COM port " & $com_port_name & " opened successfully." )
+		EndIf
 	Else
 		print( "Can't open COM port " & $com_port_name )
 		MsgBox( 0, $PROGNAME, "Can't open COM port " & $com_port_name & ". Please check the permissions and if some other app is occupying it. The program will now exit." )
@@ -329,56 +341,94 @@ Func GUI_Loop()
 			clean_up()
 		Case $tray_menu_channel[1]
 			If $channel_enabled[1] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(1)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_channel[2]
 			If $channel_enabled[2] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(2)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_channel[3]
 			If $channel_enabled[3] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(3)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_channel[4]
 			If $channel_enabled[4] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(4)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_channel[5]
 			If $channel_enabled[5] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(5)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_channel[6]
 			If $channel_enabled[6] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(6)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_channel[7]
 			If $channel_enabled[7] = 1 Then
+				OpenCOM(0)
 				Set_Channel_Number(7)
+				_CommClosePort()
 			EndIf
 		Case $tray_menu_item_options, $tray_menu_item_cla1
+			OpenCOM(0)
 			Set_Option( "Enabled LEDs on current active input (solid LED)", "$CLA1" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_cla0
+			OpenCOM(0)
 			Set_Option( "Disabled LEDs on current active input (solid LED)", "$CLA0" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_cli0
+			OpenCOM(0)
 			Set_Option( "Disabled LEDs on inactive inputs (blinking LEDs)", "$CLI0" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_cli1
+			OpenCOM(0)
 			Set_Option( "Enabled LEDs on inactive inputs (blinking LEDs)", "$CLI1" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_clr1
+			OpenCOM(0)
 			Set_Option( "Enabled LEDs on inactive inputs without signal (only blinking red LEDs)", "$CLR1" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_clr0
+			OpenCOM(0)
 			Set_Option( "Disabled LEDs on inactive inputs without signal (only blinking red LEDs)", "$CLR0" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_clm0
+			OpenCOM(0)
 			Set_Option( "Enabled Alternative LED Mode", "$CLM0" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_clm1
+			OpenCOM(0)
 			Set_Option( "Disable Alternative LED Mode", "$CLM1" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_ci0
+			OpenCOM(0)
 			Set_Option( "Disabled invalid packets detection", "$CI0" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_ci1
+			OpenCOM(0)
 			Set_Option( "Enabled invalid packets detection", "$CI1" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_cz0
+			OpenCOM(0)
 			Set_Option( "Disabled zero packets detection", "$CZ0" )
+			_CommClosePort()
 		Case $tray_menu_item_options, $tray_menu_item_cz1
+			OpenCOM(0)
 			Set_Option( "Enable zero packets detection", "$CZ1" )
+			_CommClosePort()
 	EndSwitch
 	
 EndFunc ;==> GUI_Loop()
@@ -496,10 +546,12 @@ Func clean_up()
 	If $exitrun_channel = "0" Then
 	Else
 		If $exitrun_channel > 0 And $exitrun_channel < 8 Then
+			OpenCOM(0)
 			Set_Channel_Number( $exitrun_channel )
+			_CommClosePort()
 		EndIf
 	EndIf
-	_CommClosePort()
+	;_CommClosePort()
 	exit
 
 EndFunc ; ==> clean_up()
