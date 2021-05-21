@@ -19,4 +19,5 @@ AtmanActive 2020.
 https://github.com/AtmanActive/AtmelSPDIFSwitchUSBTrayControl
 
 v1.1: added faster detection timeout to make it snappier when switching inputs
+
 v1.2: changed COM port open/close logic to on-demand to make it snappier when switching inputs
