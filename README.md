@@ -14,7 +14,7 @@ To configure the program, just edit the included ini file. It should be self-exp
 
 Enjoy.
 
-AtmanActive 2020.
+AtmanActive 2020, 2021.
 
 https://github.com/AtmanActive/AtmelSPDIFSwitchUSBTrayControl
 
